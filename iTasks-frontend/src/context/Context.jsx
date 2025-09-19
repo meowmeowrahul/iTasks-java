@@ -1,6 +1,9 @@
+/* eslint-disable no-unused-vars */
 import React, { createContext, useCallback, useEffect, useState } from "react";
 import App from "../App";
 import axios from "axios";
+
+export const URL = import.meta.env.VITE_APP_URL;
 
 // Create context once outside the component
 // eslint-disable-next-line react-refresh/only-export-components
@@ -17,12 +20,10 @@ function ContextProvider() {
     if (!userName) return; // Guard: don't call without username
 
     try {
-      const response = await axios.get(`http://localhost:8080/tasks`, {
+      const response = await axios.get(`${URL}/tasks`, {
         withCredentials: true,
       });
       setTaskCards(response.data);
-      console.log(response.data);
-      console.log("Refreshed");
       setIsError(false);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -32,7 +33,7 @@ function ContextProvider() {
   async function checkAuth() {
     console.log("check Auth");
     try {
-      const response = await axios.get("http://localhost:8080/check-token", {
+      const response = await axios.get(`${URL}/check-token`, {
         withCredentials: true,
       });
       setUserName(response.data);

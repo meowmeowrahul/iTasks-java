@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173",allowCredentials = "true")
+@CrossOrigin
 public class UserController {
 
     @Autowired
@@ -48,6 +48,26 @@ public class UserController {
         return service.register(user);
     }
 
+
+    @GetMapping("/logout")
+    public ResponseEntity<HttpStatus> logout(HttpServletResponse response){
+        Cookie cookie = new Cookie("token",null);
+        cookie.setHttpOnly(true);            // Prevent JavaScript access
+        cookie.setSecure(true);             // Use true in production with HTTPS
+        cookie.setPath("/");                 // Cookie valid for the entire domain
+        cookie.setMaxAge(0);   //instant expire
+        try{
+        response.addCookie(cookie);
+        return new ResponseEntity<>(HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+
+    }
+
     @PostMapping("/login")
     public String login(@RequestBody Users user, HttpServletResponse response,HttpServletRequest request){
         String token ="";
@@ -69,14 +89,13 @@ public class UserController {
         // Create HttpOnly cookie with the JWT token
         Cookie cookie = new Cookie("token",token);
         cookie.setHttpOnly(true);            // Prevent JavaScript access
-        cookie.setSecure(false);             // Use true in production with HTTPS
+        cookie.setSecure(true);             // Use true in production with HTTPS
         cookie.setPath("/");                 // Cookie valid for the entire domain
         cookie.setMaxAge(24 * 60 * 60);     // Expiration time: 1 day
 
         response.addCookie(cookie);
                                         // Add cookie to response
         System.out.println("Login Successful");
-        System.out.println(token);
         return "Login successful";            // Return a simple success message instead of token
     }
 

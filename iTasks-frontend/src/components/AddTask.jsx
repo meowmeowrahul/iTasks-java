@@ -1,7 +1,7 @@
 import axios from "axios";
 import "/src/index.css";
 import { useContext, useState } from "react";
-import { TaskContext } from "../context/Context";
+import { TaskContext, URL } from "../context/Context";
 
 function AddTask() {
   const { addedTask, setAddedTask, refreshData } = useContext(TaskContext);
@@ -33,7 +33,7 @@ function AddTask() {
     event.preventDefault();
     console.log(task);
     axios
-      .post(`http://localhost:8080/tasks`, task, {
+      .post(`${URL}/tasks`, task, {
         headers: {
           "Content-Type": "application/json",
         },

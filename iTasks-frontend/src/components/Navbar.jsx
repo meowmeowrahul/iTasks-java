@@ -1,14 +1,21 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useState } from "react";
 import "/src/index.css";
-import { TaskContext } from "../context/Context";
+import { TaskContext, URL } from "../context/Context";
 import navbg1 from "/src/assets/img/navbg1.jpg";
 import { faSearch, faHome, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 
 function Navbar() {
-  const { addedTask, setAddedTask, isLogged, setTaskCards, refreshData } =
-    useContext(TaskContext);
+  const {
+    addedTask,
+    setAddedTask,
+    isLogged,
+    setTaskCards,
+    refreshData,
+    setIsLogged,
+  } = useContext(TaskContext);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchBox, setSearchBox] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -26,7 +33,7 @@ function Navbar() {
   const handleToday = async () => {
     await refreshData();
     await axios
-      .get(`http://localhost:8080/tasks/sort/today`, {
+      .get(`${URL}/tasks/sort/today`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -43,7 +50,7 @@ function Navbar() {
   const handleSearch = async () => {
     await refreshData();
     await axios
-      .get(`http://localhost:8080/tasks/search/${searchValue}`, {
+      .get(`${URL}/tasks/search/${searchValue}`, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -138,9 +145,28 @@ function Navbar() {
             </button>
           </li>
           <li className="relative">
-            <button className="py-2 px-6 bg-gradient-to-r  from-yellow-400 to-orange-400 text-blue-900 font-bold rounded-full shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-yellow-300 hover:from-yellow-300 hover:to-orange-300">
+            <button
+              onClick={() => {
+                if (window.confirm("Logout?")) {
+                  axios
+                    .get(`${URL}/logout`, {
+                      headers: {
+                        "Content-Type": "application/json",
+                      },
+                      withCredentials: true,
+                    })
+                    .then(() => {
+                      setIsLogged(false);
+                    })
+                    .catch((e) => {
+                      console.log("Error:-" + e.message);
+                    });
+                }
+              }}
+              className="py-2 px-6 bg-gradient-to-r  from-yellow-400 to-orange-400 text-blue-900 font-bold rounded-full shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-yellow-300 hover:from-yellow-300 hover:to-orange-300"
+            >
               <FontAwesomeIcon icon={faUser} />
-              <a className="px-2">Profile</a>
+              <a className="px-2">Log Out</a>
             </button>
           </li>
         </ul>

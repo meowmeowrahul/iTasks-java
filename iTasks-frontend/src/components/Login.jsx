@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TaskContext } from "../context/Context";
+import { TaskContext, URL } from "../context/Context";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -92,19 +92,11 @@ const LoginModal = () => {
     setIsLoading(true);
     setMessage({ text: "", type: "" });
 
-    const response = await axios
-      .post(
-        `${
-          isLoginMode
-            ? "http://localhost:8080/login"
-            : "http://localhost:8080/register"
-        }`,
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: isLoginMode,
-        }
-      )
+    await axios
+      .post(`${isLoginMode ? `${URL}/login` : `${URL}/register`}`, formData, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: isLoginMode,
+      })
       .then(() => {
         setUserName(formData.username);
         setIsLoading(false);

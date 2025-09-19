@@ -22,7 +22,7 @@ public class JwtService {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    @Value("${jwt.expiration:1800000}") // default 30 mins
+    @Value("${jwt.expiration:3600000}") // default 1 hour
     private Long jwtExpiration;
 
     @Value("${jwt.issuer:to-do}")

@@ -1,6 +1,6 @@
 import TaskCard from "/src/components/TaskCard";
 import Navbar from "/src/components/Navbar";
-import { TaskContext } from "./context/Context";
+import { TaskContext, URL } from "./context/Context";
 import { useContext, useState } from "react";
 import AddTask from "./components/AddTask";
 import Login from "./components/Login";
@@ -13,7 +13,7 @@ function App() {
 
   const handleCompleted = async () => {
     await axios
-      .get("http://localhost:8080/tasks/filter/completed", {
+      .get(`${URL}/tasks/filter/completed`, {
         headers: {
           "Content-Type": "application/json",
         },

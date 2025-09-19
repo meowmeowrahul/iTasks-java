@@ -1,6 +1,7 @@
+/* eslint-disable no-unused-vars */
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { TaskContext } from "../context/Context";
+import { TaskContext, URL } from "../context/Context";
 import "../index.css";
 import {
   faTrash,
@@ -122,14 +123,10 @@ function TaskCard({ task, index }) {
     setIsUpdating(true);
     try {
       const updatedTask = { ...task, ...updates };
-      await axios.put(
-        `http://localhost:8080/tasks/${task.taskId}`,
-        updatedTask,
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
+      await axios.put(`${URL}/tasks/${task.taskId}`, updatedTask, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      });
       await refreshData();
     } catch (error) {
       console.error("Error updating task:", error);
@@ -144,7 +141,7 @@ function TaskCard({ task, index }) {
 
     setIsDeleting(true);
     try {
-      await axios.delete(`http://localhost:8080/tasks/${task.taskId}`, {
+      await axios.delete(`${URL}/tasks/${task.taskId}`, {
         withCredentials: true,
       });
       await refreshData();
