@@ -69,19 +69,19 @@ iTasks is a full-stack web application that allows users to manage their tasks e
 
 ### Login Page
 
-[Login](/img/login-page.png)
+![Login](/img/login-page.png)
 
 ### Demo State 1
 
-[ScreenShot1](/img/img1.png)
+![ScreenShot1](/img/img1.png)
 
 ### Demo State 2
 
-[ScreenShot2](/img/img2.png)
+![ScreenShot2](/img/img2.png)
 
 ### Demo Mobile State
 
-[mobile](/img/mobile-page.png)
+![mobile](/img/mobile-page.png)
 
 
 ## 🛠 Tech Stack
