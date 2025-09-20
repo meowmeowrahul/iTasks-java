@@ -13,7 +13,7 @@ iTasks is a full-stack web application that allows users to manage their tasks e
 ## Deployment
 
 - **Note**: Might take some while to load as "Render" automaatically closes free servers on inactivity.
-- **Backend**: Docker,Render
+- **Backend**: [Docker](https://hub.docker.com/r/meowmeowrahul/itasks),Render
 - **Frontend**: Netlify
 - **Database**: Neon(Postgresql)
 
